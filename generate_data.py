@@ -5,7 +5,7 @@ n_clusters = 4
 np.random.seed(42)
 
 regions = ["EMEA", "APAC", "AMERICAS"]
-region_probs = [0.4, 0.3, 0.3]  # Adjust as needed
+region_probs = [0.4, 0.3, 0.3]
 
 feature_names = [
     "TOTAL_SPEND_WATCHES", "TOTAL_SPEND_ACCESSORIES", "TOTAL_SPEND_BAGS", "TOTAL_SPEND_WALLETS", "TOTAL_SPEND_JEWELRY",
@@ -14,12 +14,12 @@ feature_names = [
     "SPENT_ON_BLACK_FRIDAY", "SPENT_IN_HOLIDAY_SEASON", "SPENT_AROUND_VALENTINE"
 ]
 
-def generate_mock_data(samples_per_cluster=100):
+def generate_mock_data(min_cluster_size=80, max_cluster_size=150):
     mock_data = []
     for i in range(n_clusters):
-        for _ in range(samples_per_cluster):
-            cluster = {"CLUSTER": f"Cluster {i+1}"}
-            cluster["REGION"] = np.random.choice(regions, p=region_probs)
+        cluster_size = np.random.randint(min_cluster_size, max_cluster_size + 1)
+        for _ in range(cluster_size):
+            cluster = {"CLUSTER": f"Cluster {i+1}", "REGION": np.random.choice(regions, p=region_probs)}
             age_group = np.random.choice(["IS_18_24", "IS_25_34", "IS_35_44", "IS_45_54", "IS_55_PLUS"], p=[0.2, 0.25, 0.25, 0.15, 0.15])
             male = np.random.randint(0, 2)
             cluster["IS_MALE"] = male
@@ -59,7 +59,7 @@ def generate_mock_data(samples_per_cluster=100):
     return pd.DataFrame(mock_data)
 
 # Generate and save
-data = generate_mock_data(samples_per_cluster=100)
+data = generate_mock_data()
 data["TOTAL_SPEND"] = data[[
     "TOTAL_SPEND_WATCHES", "TOTAL_SPEND_ACCESSORIES", "TOTAL_SPEND_BAGS", "TOTAL_SPEND_WALLETS", "TOTAL_SPEND_JEWELRY"
 ]].sum(axis=1)

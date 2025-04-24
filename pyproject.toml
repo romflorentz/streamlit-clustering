@@ -6,7 +6,7 @@ authors = [
     {name = "Romain Florentz",email = "romain@heaviside.fr"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "streamlit (>=1.44.1,<2.0.0)",
     "plotly (>=6.0.1,<7.0.0)"
